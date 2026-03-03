@@ -27,14 +27,14 @@ interface Exercise {
 }
 
 const DEFAULT_EXERCISES: Exercise[] = [
-  { id: '1', name: '嘟嘴瘦脸', duration: 30 },
-  { id: '2', name: '鼓气瘦脸', duration: 30 },
-  { id: '3', name: '抬头拉伸颈部', duration: 45 },
-  { id: '4', name: '左右摇头', duration: 30 },
+  { id: '1', name: 'Fish Face', duration: 30 },
+  { id: '2', name: 'Lip Press', duration: 30 },
+  { id: '3', name: 'Neck Stretch', duration: 45 },
+  { id: '4', name: 'Head Rolls', duration: 30 },
 ];
 
 export default function App() {
-  const [videoUrl, setVideoUrl] = useState('https://player.bilibili.com/player.html?bvid=BV1kWZrBcEHx&page=1&high_quality=1&danmaku=0');
+  const [videoUrl, setVideoUrl] = useState('https://www.youtube.com/embed/dQw4w9WgXcQ');
   const [inputUrl, setInputUrl] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>(DEFAULT_EXERCISES);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -72,10 +72,8 @@ export default function App() {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
       setTimeLeft(exercises[nextIndex].duration);
-      // Play a sound or notification here if needed
     } else {
       setIsActive(false);
-      // Finished all exercises
     }
   };
 
@@ -89,18 +87,12 @@ export default function App() {
 
   const updateVideo = () => {
     let finalUrl = inputUrl;
-    // Basic YouTube/Bilibili URL parsing
     if (inputUrl.includes('youtube.com/watch?v=')) {
       const id = inputUrl.split('v=')[1].split('&')[0];
       finalUrl = `https://www.youtube.com/embed/${id}`;
     } else if (inputUrl.includes('youtu.be/')) {
       const id = inputUrl.split('youtu.be/')[1].split('?')[0];
       finalUrl = `https://www.youtube.com/embed/${id}`;
-    } else if (inputUrl.includes('bilibili.com/video/')) {
-      const match = inputUrl.match(/video\/(BV[a-zA-Z0-9]+)/);
-      if (match) {
-        finalUrl = `https://player.bilibili.com/player.html?bvid=${match[1]}&page=1&high_quality=1&danmaku=0`;
-      }
     }
     setVideoUrl(finalUrl);
   };
@@ -108,7 +100,7 @@ export default function App() {
   const addExercise = () => {
     const newEx: Exercise = {
       id: Math.random().toString(36).substr(2, 9),
-      name: '新动作',
+      name: 'New Move',
       duration: 30
     };
     setExercises([...exercises, newEx]);
@@ -156,7 +148,7 @@ export default function App() {
           <div className="relative flex-1">
             <input 
               type="text" 
-              placeholder="粘贴链接..." 
+              placeholder="Paste YouTube link..." 
               className="w-full bg-stone-100 border-none rounded-lg px-3 lg:px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
               value={inputUrl}
               onChange={(e) => setInputUrl(e.target.value)}
@@ -167,7 +159,7 @@ export default function App() {
             onClick={updateVideo}
             className="bg-stone-900 text-white px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium hover:bg-stone-800 transition-colors flex items-center gap-2 whitespace-nowrap"
           >
-            加载
+            Load
           </button>
         </div>
 
@@ -187,6 +179,7 @@ export default function App() {
             className="w-full h-full border-none"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
+            sandbox="allow-top-navigation-by-user-activation allow-same-origin allow-forms allow-scripts allow-popups"
           />
         </div>
 
@@ -292,7 +285,7 @@ export default function App() {
               onClick={resetTimer}
               className="mt-8 text-stone-400 hover:text-stone-900 flex items-center gap-2 text-sm font-medium transition-colors"
             >
-              <RotateCcw size={16} /> 重置当前计时
+              <RotateCcw size={16} /> Reset Timer
             </button>
           </div>
 
@@ -307,12 +300,12 @@ export default function App() {
                 className="absolute inset-x-0 bottom-0 h-[70%] bg-white border-t border-stone-200 shadow-2xl z-40 flex flex-col"
               >
                 <div className="p-6 border-b border-stone-100 flex items-center justify-between">
-                  <h3 className="font-bold text-lg">动作序列设置</h3>
+                  <h3 className="font-bold text-lg">Exercise Settings</h3>
                   <button 
                     onClick={() => setShowSettings(false)}
                     className="text-stone-400 hover:text-stone-900"
                   >
-                    完成
+                    Done
                   </button>
                 </div>
                 
@@ -350,7 +343,7 @@ export default function App() {
                     onClick={addExercise}
                     className="w-full py-3 border-2 border-dashed border-stone-200 rounded-xl text-stone-400 hover:border-emerald-500 hover:text-emerald-600 transition-all flex items-center justify-center gap-2 text-sm font-medium"
                   >
-                    <Plus size={18} /> 添加新动作
+                    <Plus size={18} /> Add New Exercise
                   </button>
                 </div>
               </motion.div>
@@ -363,7 +356,7 @@ export default function App() {
       <div className="fixed bottom-6 left-6 flex gap-4">
         <div className="bg-white/80 backdrop-blur-md border border-stone-200 rounded-full px-4 py-2 flex items-center gap-3 shadow-lg text-xs font-medium text-stone-600">
           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          正在播放: {exercises[currentIndex].name}
+          Active: {exercises[currentIndex].name}
         </div>
       </div>
     </div>
