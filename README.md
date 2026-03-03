@@ -1,4 +1,4 @@
-# 📺 FitStream —— Your Immersive Workout Video Companion
+ 📺 FitStream —— Your Immersive Workout Video Companion
 
 [![React](https://img.shields.io/badge/React-19.0-blue.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2-646CFF.svg)](https://vitejs.dev/)
@@ -11,6 +11,7 @@ FitStream is a productivity tool designed for "micro-workout" fans. It integrate
 **💡 Core Concept:**
 Reminds you to stay active while watching videos or binging shows. Stretch your neck, do facial exercises, or perform quick routines during your screen time.
 
+<img width="1917" height="979" alt="fit1" src="https://github.com/user-attachments/assets/11438fd3-e0b4-447d-afc5-c8e29f4eec74" />
 ---
 
 ## ✨ Key Features
@@ -27,7 +28,7 @@ Reminds you to stay active while watching videos or binging shows. Stretch your 
 ---
 
 ## 📖 How to Use
-
+Try it here:https://wwpablow.github.io/FitStream/
 1. **Load a Video**: Paste a YouTube link in the top input and click "Load".
 2. **Start Timer**: Click the large play button on the right to start your routine.
 3. **Customize**: Click the gear icon to modify exercise names (e.g., Neck Stretch, Face Yoga) and durations.
