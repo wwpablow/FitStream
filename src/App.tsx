@@ -34,7 +34,7 @@ const DEFAULT_EXERCISES: Exercise[] = [
 ];
 
 export default function App() {
-  const [videoUrl, setVideoUrl] = useState('https://www.youtube.com/embed/dQw4w9WgXcQ');
+  const [videoUrl, setVideoUrl] = useState('https://player.bilibili.com/player.html?bvid=BV1kWZrBcEHx&page=1&high_quality=1&danmaku=0');
   const [inputUrl, setInputUrl] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>(DEFAULT_EXERCISES);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -143,20 +143,21 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#F5F5F4] text-[#1C1917] font-sans selection:bg-emerald-100">
       {/* Header / URL Input */}
-      <header className="bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200">
-            <Play size={20} fill="currentColor" />
+      <header className="bg-white border-b border-stone-200 px-4 lg:px-6 py-3 lg:py-4 flex flex-wrap items-center justify-between sticky top-0 z-50 gap-3">
+        <div className="flex items-center gap-2 lg:gap-3">
+          <div className="w-8 h-8 lg:w-10 lg:h-10 bg-emerald-600 rounded-lg lg:rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200">
+            <Play size={16} fill="currentColor" className="lg:hidden" />
+            <Play size={20} fill="currentColor" className="hidden lg:block" />
           </div>
-          <h1 className="text-xl font-semibold tracking-tight">FitStream</h1>
+          <h1 className="text-lg lg:text-xl font-semibold tracking-tight">FitStream</h1>
         </div>
         
-        <div className="flex-1 max-w-2xl mx-8 flex gap-2">
+        <div className="order-3 lg:order-2 w-full lg:flex-1 lg:max-w-2xl flex gap-2">
           <div className="relative flex-1">
             <input 
               type="text" 
-              placeholder="粘贴 YouTube 或 Bilibili 链接..." 
-              className="w-full bg-stone-100 border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
+              placeholder="粘贴链接..." 
+              className="w-full bg-stone-100 border-none rounded-lg px-3 lg:px-4 py-2 text-sm focus:ring-2 focus:ring-emerald-500 transition-all outline-none"
               value={inputUrl}
               onChange={(e) => setInputUrl(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && updateVideo()}
@@ -164,23 +165,23 @@ export default function App() {
           </div>
           <button 
             onClick={updateVideo}
-            className="bg-stone-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors flex items-center gap-2"
+            className="bg-stone-900 text-white px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium hover:bg-stone-800 transition-colors flex items-center gap-2 whitespace-nowrap"
           >
-            加载视频
+            加载
           </button>
         </div>
 
         <button 
           onClick={() => setShowSettings(!showSettings)}
-          className={`p-2 rounded-lg transition-colors ${showSettings ? 'bg-emerald-100 text-emerald-700' : 'hover:bg-stone-100 text-stone-500'}`}
+          className={`order-2 lg:order-3 p-2 rounded-lg transition-colors ${showSettings ? 'bg-emerald-100 text-emerald-700' : 'hover:bg-stone-100 text-stone-500'}`}
         >
           <Settings2 size={20} />
         </button>
       </header>
 
-      <main className="flex h-[calc(100vh-73px)] overflow-hidden">
+      <main className="flex flex-col lg:flex-row h-[calc(100vh-73px)] overflow-hidden">
         {/* Left: Video Player */}
-        <div className="flex-1 bg-black relative group">
+        <div className="flex-1 bg-black relative group min-h-[300px] lg:min-h-0">
           <iframe 
             src={videoUrl}
             className="w-full h-full border-none"
@@ -190,7 +191,7 @@ export default function App() {
         </div>
 
         {/* Right: Timer & Controls */}
-        <div className="w-[400px] border-l border-stone-200 bg-white flex flex-col shadow-2xl">
+        <div className="w-full lg:w-[400px] border-t lg:border-t-0 lg:border-l border-stone-200 bg-white flex flex-col shadow-2xl overflow-y-auto lg:overflow-visible">
           {/* Current Exercise Display */}
           <div className="p-8 flex-1 flex flex-col items-center justify-center text-center">
             <div className="mb-2 text-stone-400 font-mono text-sm tracking-widest uppercase">
@@ -209,12 +210,21 @@ export default function App() {
               </motion.h2>
             </AnimatePresence>
 
-            <div className="relative mb-12">
-              <div className="text-8xl font-mono font-light tracking-tighter tabular-nums">
+            <div className="relative mb-8 lg:mb-12">
+              <div className="text-6xl lg:text-8xl font-mono font-light tracking-tighter tabular-nums">
                 {formatTime(timeLeft)}
               </div>
               {/* Progress Ring (Simplified) */}
-              <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] -rotate-90 opacity-10">
+              <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] lg:w-[280px] lg:h-[280px] -rotate-90 opacity-10">
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  className="lg:hidden"
+                />
                 <circle
                   cx="140"
                   cy="140"
@@ -222,6 +232,18 @@ export default function App() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="4"
+                  className="hidden lg:block"
+                />
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeDasharray="565"
+                  animate={{ strokeDashoffset: 565 * (1 - timeLeft / exercises[currentIndex].duration) }}
+                  className="text-emerald-500 opacity-100 lg:hidden"
                 />
                 <motion.circle
                   cx="140"
@@ -232,7 +254,7 @@ export default function App() {
                   strokeWidth="4"
                   strokeDasharray="816"
                   animate={{ strokeDashoffset: 816 * (1 - timeLeft / exercises[currentIndex].duration) }}
-                  className="text-emerald-500 opacity-100"
+                  className="text-emerald-500 opacity-100 hidden lg:block"
                 />
               </svg>
             </div>
